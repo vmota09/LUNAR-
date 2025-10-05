@@ -1,0 +1,297 @@
+/* --- IMPORTAÇÃO DE FONTE E VARIÁVEIS GLOBAIS --- */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto:wght@300;400;700&display=swap');
+
+:root {
+    --bg-dark-space: #0f0f1a;
+    --bg-dark-panel: #1a1a2e;
+    --bg-light-panel: #2a2a4e;
+    --text-primary: #e0e0e0;
+    --text-secondary: #b0b0c0;
+    --accent-primary: #00aaff;
+    --accent-secondary: #4f4f7a;
+    --border-color: #7a7ab3;
+    --feedback-good: #4CAF50;
+    --feedback-warn: #FFC107;
+    --feedback-danger: #F44336;
+    --error-color: #F44336;
+}
+
+/* --- AJUSTE DE LAYOUT UNIVERSAL --- */
+* { box-sizing: border-box; }
+
+/* --- ESTILO GERAL --- */
+body { font-family: 'Roboto', sans-serif; background-color: var(--bg-dark-space); color: var(--text-primary); margin: 0; padding: 20px; }
+header { text-align: center; margin-bottom: 30px; }
+header h1 { font-family: 'Orbitron', sans-serif; color: #fff; font-size: 2.5em; letter-spacing: 2px; margin: 0; }
+header h1 i { color: var(--accent-primary); animation: spin 15s linear infinite; }
+header p { color: var(--text-secondary); font-size: 1.1em; }
+section { width: 100%; max-width: 1300px; margin: 20px auto; background-color: var(--bg-dark-panel); border-radius: 12px; padding: 30px; border: 1px solid var(--accent-secondary); box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7); animation: fadeIn 0.8s ease-in-out; }
+.hidden { display: none; }
+h2 { font-family: 'Orbitron', sans-serif; font-size: 1.8em; margin-top: 0; border-bottom: 2px solid var(--accent-primary); padding-bottom: 15px; margin-bottom: 10px; }
+.subtitle { color: var(--text-secondary); margin-bottom: 30px; }
+
+/* --- ANIMAÇÕES --- */
+@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+/* --- FASE 1: CARTÕES DE ZONA --- */
+.zone-options-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+.zone-card { background: var(--bg-light-panel); border: 1px solid var(--accent-secondary); border-radius: 8px; padding: 20px; cursor: pointer; transition: all 0.3s ease; display: flex; flex-direction: column; }
+.zone-card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0, 170, 255, 0.2); border-color: var(--accent-primary); }
+.zone-card h3 { margin: 0 0 15px 0; font-family: 'Orbitron', sans-serif; color: #fff; }
+.zone-stats { list-style: none; padding: 0; margin: 0 0 20px 0; }
+.zone-stats li { color: var(--text-secondary); margin-bottom: 8px; }
+.zone-stats li strong { color: var(--text-primary); min-width: 80px; display: inline-block; }
+.select-zone-btn { margin-top: auto; background-color: var(--accent-primary); color: #fff; border: none; padding: 12px; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold; transition: background-color 0.3s ease; text-align: center; }
+.select-zone-btn:hover { background-color: #0088cc; }
+
+/* --- FASE 2: FERRAMENTA DE LAYOUT --- */
+.phase2-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--accent-primary); padding-bottom: 15px; margin-bottom: 20px; }
+.phase2-header h2 { border: none; padding: 0; margin: 0; }
+#back-to-phase1-btn, #clear-modules-btn { background: transparent; border: 1px solid var(--border-color); color: var(--text-primary); padding: 10px 15px; border-radius: 5px; cursor: pointer; font-size: 14px; transition: all 0.3s ease; }
+#back-to-phase1-btn:hover { background: var(--accent-secondary); border-color: var(--accent-secondary); }
+#clear-modules-btn { margin-top: auto; }
+#clear-modules-btn:hover { background: var(--error-color); border-color: var(--error-color); color: white; }
+
+.layout-tool { display: flex; gap: 20px; align-items: flex-start; }
+#side-panel { width: 250px; background: var(--bg-dark-space); padding: 20px; border-radius: 5px; display: flex; flex-direction: column; height: 800px; }
+#side-panel h3 { margin-top: 0; }
+#side-panel button { background-color: var(--bg-light-panel); color: var(--text-primary); border: 1px solid var(--accent-secondary); padding: 12px; border-radius: 5px; cursor: pointer; font-size: 15px; text-align: left; transition: all 0.3s ease; display: flex; align-items: center; gap: 10px; position: relative; }
+#side-panel button:hover { background-color: var(--accent-primary); border-color: var(--accent-primary); color: #fff; }
+[data-tooltip]:hover::after { content: attr(data-tooltip); position: absolute; left: 105%; top: 50%; transform: translateY(-50%); background-color: #000; color: #fff; padding: 8px 12px; border-radius: 5px; font-size: 14px; white-space: nowrap; z-index: 100; border: 1px solid var(--accent-primary); }
+
+#blueprint-area { flex-grow: 1; background-color: #1c1c3c; border: 2px dashed var(--border-color); border-radius: 5px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; min-height: 800px; }
+#blueprint-info { text-align: center; font-family: 'Orbitron', sans-serif; color: rgba(122, 122, 179, 0.4); font-size: 2em; user-select: none; z-index: 1; }
+#feedback-panel { width: 300px; background: var(--bg-dark-space); padding: 20px; border-radius: 5px; height: 800px; }
+#feedback-panel h3 { margin-top: 0; }
+
+#ring-guide-message { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); padding: 12px 22px; border-radius: 5px; background-color: var(--accent-secondary); color: var(--text-primary); font-size: 15px; font-family: 'Orbitron', sans-serif; z-index: 100; pointer-events: none; box-shadow: 0 0 15px rgba(0,0,0,0.5); border: 1px solid var(--border-color); text-align: center; }
+
+.module { position: absolute; width: 90px; height: 104px; background-color: var(--accent-secondary); clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; padding: 10px 0; color: white; cursor: grab; user-select: none; animation: fadeIn 0.3s ease; text-align: center; font-size: 11px; font-weight: normal; transition: transform 0.2s ease, filter 0.2s ease, left 0.2s ease, top 0.2s ease; z-index: 2; }
+.module i { font-size: 1.5em; }
+.module:active { cursor: grabbing; z-index: 10; transform: scale(1.05); }
+.module-colliding { filter: drop-shadow(0 0 8px var(--feedback-danger)); }
+
+.module-habitat { background-color: rgba(247, 224, 22, 0.85); }
+.module-airlock { background-color: rgba(200, 200, 200, 0.85); }
+.module-power { background-color: rgba(255, 193, 7, 0.85); }
+.module-ltv { background-color: rgba(76, 175, 80, 0.85); }
+.module-isru { background-color: rgba(156, 39, 176, 0.85); }
+.module-pressurized-rover { background-color: rgba(244, 67, 54, 0.85); }
+.module-default { background-color: rgba(79, 79, 122, 0.85); }
+
+.module-selected { filter: drop-shadow(0 0 12px var(--accent-primary)); }
+.delete-module-btn { position: absolute; top: 15px; right: 15px; width: 18px; height: 18px; background-color: var(--error-color); color: white; border: 1px solid rgba(255,255,255,0.3); border-radius: 50%; display: none; align-items: center; justify-content: center; cursor: pointer; transition: background-color 0.2s ease, transform 0.2s ease; z-index: 15; font-size: 0.7em; transform: scale(1); }
+.delete-module-btn:hover { background-color: #d32f2f; transform: scale(1.1); }
+.module-selected .delete-module-btn { display: flex; }
+
+/* --- FEEDBACK VISUAL --- */
+.feedback-good { color: var(--feedback-good); }
+.feedback-warn { color: var(--feedback-warn); }
+.feedback-danger { color: var(--feedback-danger); }
+#feedback-panel p { margin: 15px 0; border-left: 3px solid; padding-left: 10px; }
+#feedback-panel .feedback-good { border-color: var(--feedback-good); }
+#feedback-panel .feedback-warn { border-color: var(--feedback-warn); }
+#feedback-panel .feedback-danger { border-color: var(--feedback-danger); }
+
+/* --- ESTILOS DO ANEL COMPLETO --- */
+.ring-center { position: absolute; width: 90px; height: 104px; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); background-color: rgba(42, 42, 78, 0.8); border: 2px dashed var(--accent-secondary); display: flex; align-items: center; justify-content: center; z-index: 1; padding: 10px; text-align: center; transition: left 0.2s ease, top 0.2s ease; }
+.ring-center input { width: 100%; background: transparent; border: none; border-bottom: 1px solid var(--accent-primary); color: var(--text-primary); font-family: 'Orbitron', sans-serif; text-align: center; outline: none; font-size: 13px; }
+.ring-center .ring-name { font-family: 'Orbitron', sans-serif; color: var(--accent-primary); font-size: 14px; font-weight: bold; word-break: break-word; }
+
+/* --- ESTILO DO MÓDULO DE LIGAÇÃO --- */
+.corridor-module { position: absolute; width: 90px; height: 104px; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); background-color: var(--bg-dark-panel); border: 2px solid var(--border-color); z-index: 1; transition: left 0.2s ease, top 0.2s ease; }
+
+/* --- ESTILOS PARA O MENU EXPANSÍVEL --- */
+.module-category {
+    border-bottom: 1px solid var(--accent-secondary);
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+.module-category summary {
+    cursor: pointer;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1em;
+    padding: 10px 5px;
+    color: var(--text-primary);
+    list-style: none;
+    outline: none;
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.module-category summary::-webkit-details-marker {
+    display: none;
+}
+.module-category summary::before {
+    content: '\f078';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    transition: transform 0.2s ease-in-out;
+    color: var(--accent-primary);
+    margin-left: 10px;
+}
+.module-category[open] > summary::before {
+    transform: rotate(-180deg);
+}
+.module-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* --- NAVBAR --- */
+.navbar {
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto 30px auto;
+    padding: 15px 20px;
+    background-color: rgba(26, 26, 46, 0.7);
+    border-bottom: 1px solid var(--accent-secondary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(5px);
+    border-radius: 0 0 12px 12px;
+}
+.navbar-brand {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.5em;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.navbar-brand i {
+    color: var(--accent-primary);
+}
+.navbar-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 25px;
+}
+.navbar-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 1em;
+    font-weight: bold;
+    padding: 5px 0;
+    position: relative;
+    transition: color 0.3s ease;
+}
+.navbar-links a:hover {
+    color: var(--accent-primary);
+}
+.navbar-links a::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: var(--accent-primary);
+    bottom: 0;
+    left: 0;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.3s ease;
+}
+.navbar-links a:hover::after {
+    transform: scaleX(1);
+}
+
+/* --- FOOTER --- */
+footer {
+    width: 100%;
+    max-width: 1300px;
+    margin: 40px auto 0 auto;
+    padding: 20px;
+    border-top: 1px solid var(--accent-secondary);
+    text-align: center;
+}
+footer p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.9em;
+}
+
+/* --- ESTILO DA ÁREA DE PLANEJAMENTO --- */
+#blueprint-area {
+    flex-grow: 1;
+    background-color: #1c1c3c;
+    border: 2px dashed var(--border-color);
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+
+    /* A mágica acontece aqui! As zonas são gradientes no fundo. */
+    background-image:
+        /* Zona de Água/Gelo (Azul) */
+        radial-gradient(circle at 85% 85%, rgba(0, 170, 255, 0.2) 0%, transparent 20%),
+        /* Zona Instável (Vermelho) */
+        radial-gradient(circle at 90% 15%, rgba(244, 67, 54, 0.2) 0%, transparent 18%),
+        /* Zona Solar (Amarelo) */
+        radial-gradient(circle at 15% 50%, rgba(255, 193, 7, 0.2) 0%, transparent 25%),
+        /* Linhas da Grade (Vertical) */
+        linear-gradient(rgba(122, 122, 179, 0.2) 1px, transparent 1px),
+        /* Linhas da Grade (Horizontal) */
+        linear-gradient(90deg, rgba(122, 122, 179, 0.2) 1px, transparent 1px);
+
+    /* Define o tamanho de cada imagem de fundo */
+    background-size: 
+        100% 100%, 
+        100% 100%, 
+        100% 100%, 
+        40px 40px, 
+        40px 40px;
+
+    /* Garante que tudo comece no canto superior esquerdo */
+    background-position: 0 0; 
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 800px; /* Adicionado para garantir uma altura mínima */
+    transition: height 0.3s ease; /* Adicionado para suavizar a mudança de altura */
+}
+
+#blueprint-info {
+    text-align: center;
+    font-family: 'Orbitron', sans-serif;
+    color: rgba(122, 122, 179, 0.4);
+    font-size: 2em;
+    user-select: none;
+    z-index: 1;
+}
+
+/* --- ESTILO DO MÓDULO DE LIGAÇÃO (CORREDOR/AIRLOCK) --- */
+.corridor-module {
+    position: absolute;
+    width: 90px;
+    height: 104px;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    background-color: var(--bg-dark-panel); /* Cor padrão */
+    border: 2px solid var(--border-color); /* Borda padrão */
+    z-index: 1;
+    transition: left 0.2s ease, top 0.2s ease;
+}
+
+/* Quando o corredor for um AIRLOCK, aplicamos estas mudanças */
+.corridor-module.airlock-corridor {
+    background-color: #6c757d; /* Apenas muda a cor para cinza */
+    border-color: #adb5bd;     /* E a cor da borda para um cinza mais claro */
+    
+    /* Estilos para o texto */
+    color: white;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: bold;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
